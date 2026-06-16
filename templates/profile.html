@@ -1,0 +1,157 @@
+{% extends "student.html" %}
+
+{% block title %}My Profile - LJCourses{% endblock %}
+
+<!-- Profile CSS -->
+{% block styles %}
+<link href="{{ url_for('static', filename='css/profile.css' ) }}" rel="stylesheet" />{% endblock %}
+
+{% block student_content %}
+<div class="container-fluid" style="max-width: 70rem;">
+    <!-- Profile Header Card -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4 p-md-5">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                <div class="position-relative">
+                    <img id="profile-photo"
+                        src="{{ user.profile_image if user.profile_image else '/static/images/default-user.svg' }}"
+                        class="rounded-circle" style="width: 7.5rem; height: 7.5rem; object-fit: cover;" alt="Profile">
+                    <input type="file" id="photo-file-input" accept="image/*" style="display: none;">
+                    <button id="photo-upload-btn" type="button"
+                        class="btn btn-primary rounded-circle position-absolute d-flex align-items-center"
+                        style="bottom: 0; right: 0;padding: 0.4rem;">
+                        <span class="material-icons" style="font-size: 1.1rem;">photo_camera</span>
+                    </button>
+                </div>
+                <div class="flex-grow-1 text-center text-md-start">
+                    <h2 id="profile-name-header" class="h3 fw-bold mb-2">{{ user.full_name }}</h2>
+                    <p class="text-secondary mb-3 d-flex align-items-center justify-content-md-start gap-2">
+                        <span class="material-icons" style="font-size: 1.125rem;">email</span>
+                        <span id="profile-email-header">{{ user.email }}</span>
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-md-start gap-2">
+                        <span class="badge rounded-pill px-3 py-2"
+                            style="background-color: #dbeafe; color: #2563eb; font-size: 0.75rem; font-weight: 600;">{{
+                            user.role|upper }}</span>
+                        <span class="badge rounded-pill px-3 py-2"
+                            style="background-color: #d1fae5; color: #059669; font-size: 0.75rem; font-weight: 600;">ACTIVE</span>
+                    </div>
+                </div>
+                <div class="ms-auto d-flex align-items-center">
+                    <button id="save-profile-btn" type="button" class="btn btn-primary px-4 py-2 fw-semibold">Save
+                        Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="row g-4">
+        <!-- Left Column -->
+        <div class="col-lg-7">
+            <!-- Personal Information -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                        <span class="material-icons text-primary">person</span>
+                        Personal Information
+                    </h5>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary fw-medium small">Full Name</label>
+                        <input id="input-fullname" type="text" class="form-control" placeholder="Enter your full name"
+                            value="{{ user.full_name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary fw-medium small">Email</label>
+                        <input id="input-email" type="email" class="form-control" placeholder="Your email"
+                            value="{{ user.email }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary fw-medium small">Major</label>
+                        <input id="input-major" type="text" class="form-control" placeholder="e.g. Computer Science"
+                            value="{{ user.major if user.major else '' }}">
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label text-secondary fw-medium small">Bio</label>
+                        <textarea id="input-bio" class="form-control" rows="4"
+                            placeholder="Tell us about yourself...">{{ user.bio if user.bio else '' }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-5">
+            <!-- Academic Progress -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                        <span class="material-icons text-primary">trending_up</span>
+                        Academic Progress
+                    </h5>
+
+                    <!-- Stats List (Vertical) -->
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <!-- Enrolled -->
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                style="width: 3rem; height: 3rem; background-color: #dbeafe;">
+                                <span class="material-icons text-primary">library_books</span>
+                            </div>
+                            <div>
+                                <p class="text-secondary text-uppercase mb-0"
+                                    style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;">
+                                    ENROLLED</p>
+                                <p class="h5 fw-bold mb-0">{{ enrolled_count }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Completed -->
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                style="width: 3rem; height: 3rem; background-color: #d1fae5;">
+                                <span class="material-icons" style="color: #059669;">verified</span>
+                            </div>
+                            <div>
+                                <p class="text-secondary text-uppercase mb-0"
+                                    style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;">
+                                    COMPLETED</p>
+                                <p class="h5 fw-bold mb-0">{{ completed_count }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Remaining -->
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                style="width: 3rem; height: 3rem; background-color: #ffedd5;">
+                                <span class="material-icons text-warning">pending</span>
+                            </div>
+                            <div>
+                                <p class="text-secondary text-uppercase mb-0"
+                                    style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;">
+                                    REMAINING</p>
+                                <p class="h5 fw-bold mb-0">{{ remaining_count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Help Card -->
+            <div class="card border-0 shadow-lg"
+                style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-radius: 1.25rem;">
+                <div class="card-body p-4 text-white">
+                    <h5 class="fw-bold mb-2">Need Academic Help?</h5>
+                    <p class="mb-3 opacity-90" style="font-size: 0.875rem;">Book a session with your
+                        academic counselor today.</p>
+                    <button class="btn btn-light w-100 fw-bold text-primary py-2">Schedule Meeting</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}

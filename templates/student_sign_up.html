@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %}LJCourses Student Sign-Up{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/signup.css' ) }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body_class %}min-vh-100 d-flex flex-column{% endblock %}
+
+{% block navbar %}
+<nav class="navbar border-bottom">
+    <div class="container-xl">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('course.home') }}">
+            <span class="material-icons text-primary-custom fs-2">school</span>
+            <span>LJCourses</span>
+        </a>
+
+        <div class="d-flex align-items-center gap-3">
+            <button aria-label="Toggle Theme" onclick="toggleDarkMode()" class="btn btn-link text-secondary p-2">
+                <span class="material-icons icon-dark-mode">dark_mode</span>
+                <span class="material-icons icon-light-mode">nightlight</span>
+            </button>
+
+            <div class="vr d-none d-sm-block align-self-center" style="height: 1.5rem;"></div>
+
+            <span class="text-secondary d-none d-sm-inline small">Already have an account?</span>
+
+            <a class="btn btn-outline-secondary-custom" href="{{ url_for('auth.student_login') }}">Login</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow-1 d-flex align-items-center justify-content-center py-4 py-lg-5 px-3">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden w-100" style="max-width: 75rem; min-height: 700px;">
+        <div class="row g-0 h-100">
+
+            <!-- Left Panel - Hero Section -->
+            <div
+                class="col-lg-6 bg-gradient-primary text-white p-4 p-lg-5 d-flex flex-column justify-content-between position-relative overflow-hidden">
+
+                <!-- Decorative Blobs -->
+                <div class="blob-decoration blob-blue-hero"></div>
+                <div class="blob-decoration blob-purple-hero"></div>
+
+                <div class="position-relative" style="z-index: 10;">
+                    <!-- Badge -->
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill glass-badge mb-4">
+                        <span class="material-icons" style="font-size: 0.875rem;">auto_awesome</span>
+                        <span class="text-uppercase small fw-medium"
+                            style="letter-spacing: 0.05em; font-size: 0.75rem;">New Courses Added Weekly</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h1 class="display-4 fw-bold lh-sm mb-4">
+                        Unlock Your <br />Potential Today
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="lead opacity-75 mb-0" style="max-width: 28rem;">
+                        Join a community of 10,000+ ambitious learners mastering new skills every day through
+                        LJCourses.
+                    </p>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="position-relative mt-5 mt-lg-0" style="z-index: 10;">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- Avatar Group -->
+                        <div class="avatar-group">
+                            <img alt="Student avatar 1" class="rounded-circle"
+                                style="width: 2.5rem; height: 2.5rem; object-fit: cover;"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWPPyDYkdvRxcthbf6fu-xaUMbvl4oTNbsJIYfxVr4c4z3TIEclPEBjmNvBkg4Lnk7YgKg9AY9LOtFN_uu0-SgHrcbLhJlq46Z8CamY2B_BrCPwNTgvDutKfHJq6FngrzRG7V2oY29Ok1MwjkOhxXWNIdGTDw2gZaYgk4VjqpAR2mshhoduCQOeZpGaO3JcO0Mmxe527TBQ40OqhB-dqUkI9WzaGPm3QRqS18H1y_0lmVy-iXc08CzhLrf6Wi71C6v9JaUBZouUXP4" />
+                            <img alt="Student avatar 2" class="rounded-circle"
+                                style="width: 2.5rem; height: 2.5rem; object-fit: cover;"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-llYXjRMv_4pkGxlTyqSp1q84p49Qj9KsFtR8A06JbTD6fFOJydChe4bAEDfrOpn5cd2f9NF6BfL3TB2bEpDbKGVkFa3bvI6wd461E3q2r0oDksUYi_ZwH52vk9kK41hSL7SMHzI3IBbKEA_u67tkumIJaUBxz0h5nYduiOB2K_veFYWHYymb81k6lCBlhh3Xy5cqn1prnjDYHuYIwbwiCu-xeQASbFfTljil1HqlYqPnw9IiPDIbNpJ72UD5HlL8vqqV14yK_VLz" />
+                            <img alt="Student avatar 3" class="rounded-circle"
+                                style="width: 2.5rem; height: 2.5rem; object-fit: cover;"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYGpJJT5lb9N6_q8YOgX9MXvjTXT0x9CJmHLg-giIUQL_6_v6vZEFhy579R4akQu4K6PRsePiFqyigPraoAnzE7nq6xT5LGtIrNaVE8NZKGXkFAodmSET_E7SD4TadKq_2ZBFzV21XcOZDg0IwG1DsbZPv-CdKYeWInKUbhjWreWRMTpkajgg17U3kxi8iTD3Pl2lTBcUpeabGMYKo8k9OC0ctznflZ_sNDLtiooChqQeWs3kAg3BnyiGAfukAesbjXTqC3DBMtHVm" />
+                            <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center fw-bold avatar-count"
+                                style="width: 2.5rem; height: 2.5rem; font-size: 0.75rem;">
+                                +5k
+                            </div>
+                        </div>
+
+                        <!-- Rating -->
+                        <div>
+                            <div class="d-flex text-warning-custom">
+                                <span class="material-icons" style="font-size: 1rem;">star</span>
+                                <span class="material-icons" style="font-size: 1rem;">star</span>
+                                <span class="material-icons" style="font-size: 1rem;">star</span>
+                                <span class="material-icons" style="font-size: 1rem;">star</span>
+                                <span class="material-icons" style="font-size: 1rem;">star_half</span>
+                            </div>
+                            <p class="small mb-0 mt-1 opacity-75" style="font-size: 0.75rem;">Rated 4.9/5 by
+                                students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Sign-Up Form -->
+            <div class="col-lg-6 p-4 p-lg-5">
+                <div class="mx-auto" style="max-width: 28rem;">
+                    <h2 class="fw-bold mb-2">Create your account</h2>
+                    <p class="text-secondary mb-4">Start your free 14-day trial. No credit card required.</p>
+
+                    <!-- Sign-Up Form -->
+                    <form class="d-flex flex-column gap-3">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="form-label small fw-medium" for="fullname">Full Name</label>
+                            <div class="position-relative">
+                                <input class="form-control form-control-signup" id="fullname" name="fullname"
+                                    placeholder="e.g. John Doe" type="text" />
+                                <span class="material-icons form-icon-right" style="font-size: 1.125rem;">person</span>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div>
+                            <label class="form-label small fw-medium" for="email">Email Address</label>
+                            <div class="position-relative">
+                                <input class="form-control form-control-signup" id="email" name="email"
+                                    placeholder="enrollmentnumber@mail.ljku.edu.in" type="email" />
+                                <span class="material-icons form-icon-right" style="font-size: 1.125rem;">mail</span>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="form-label small fw-medium" for="password">Password</label>
+                            <div class="position-relative">
+                                <input class="form-control form-control-signup" id="password" name="password"
+                                    placeholder="Min 8 characters" type="password" />
+                                <span class="material-icons form-icon-right clickable"
+                                    style="font-size: 1.125rem;">visibility_off</span>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="form-label small fw-medium" for="confirm-password">Confirm
+                                Password</label>
+                            <div class="position-relative">
+                                <input class="form-control form-control-signup" id="confirm-password"
+                                    name="confirm-password" placeholder="Re-enter password" type="password" />
+                                <span class="material-icons form-icon-right" style="font-size: 1.125rem;">lock</span>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" id="terms" name="terms" type="checkbox" />
+                            <label class="form-check-label small" for="terms">
+                                I agree to the <a class="text-primary-custom fw-semibold text-decoration-none"
+                                    href="#">Terms of Service</a> and <a
+                                    class="text-primary-custom fw-semibold text-decoration-none" href="#">Privacy
+                                    Policy</a>.
+                            </label>
+                        </div>
+
+                        <!-- Password Requirements -->
+                        <div class="bg-light p-3 rounded small">
+                            <p class="fw-semibold mb-2 text-secondary">Password Requirements:</p>
+                            <ul class="mb-0 ps-3 text-secondary">
+                                <li>At least 8 characters long</li>
+                                <li>Include uppercase and lowercase letters</li>
+                                <li>Include at least one number</li>
+                                <li>Include at least one special character</li>
+                            </ul>
+                        </div>
+
+
+                        <!-- Submit Button -->
+                        <div class="mt-2">
+                            <button class="btn btn-primary w-100 py-3 fw-semibold shadow-sm" type="submit">
+                                Create Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/signup.js' ) }}"></script>
+{% endblock %}

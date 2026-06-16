@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/my-courses.css' ) }}" rel="stylesheet" />
+{% block styles %}{% endblock %}
+{% endblock %}
+
+{% block body_class %}d-flex vh-100 overflow-hidden my-courses-page{% endblock %}
+
+{% block body_attrs %}data-user-id="{{ user.id if user else (current_user.id if current_user else '') }}"{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<!-- Side Navigation -->
+<aside class="sidebar d-none d-lg-flex flex-column border-end bg-white shadow-sm">
+    <div class="d-flex flex-column h-100 justify-content-between p-4">
+        <div class="d-flex flex-column gap-4">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center gap-1 p-2" href="{{ url_for('course.browse_courses') }}">
+                <div class="brand-icon bg-opacity-10 d-flex align-items-center justify-content-center">
+                    <span class="material-icons text-primary-custom fs-2">school</span>
+                </div>
+                <h1 class="brand-title mb-0">LJCourses</h1>
+            </a>
+            <!-- Navigation Links -->
+            <nav class="d-flex flex-column gap-2">
+                <a class="nav-link-item {% if active_page == 'my_courses' %}active{% endif %}"
+                    href="{{ url_for('student.my_courses') }}">
+                    <span class="material-icons fill-1">dashboard</span>
+                    <span>My Courses</span>
+                </a>
+                <a class="nav-link-item {% if active_page == 'browse_courses' %}active{% endif %}"
+                    href="{{ url_for('course.browse_courses') }}">
+                    <span class="material-icons">search</span>
+                    <span>Browse Courses</span>
+                </a>
+                <a class="nav-link-item {% if active_page == 'completed_courses' %}active{% endif %}"
+                    href="{{ url_for('student.completed_courses') }}">
+                    <span class="material-icons">check_circle</span>
+                    <span>Completed</span>
+                </a>
+                <a class="nav-link-item {% if active_page == 'settings' %}active{% endif %}"
+                    href="{{ url_for('student.settings') }}">
+                    <span class="material-icons">settings</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="border-top pt-3">
+            <a class="nav-link-item nav-link-danger" href="#" data-action="logout">
+                <span class="material-icons">logout</span>
+                <span>Log Out</span>
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- Mobile Sidebar (Offcanvas) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar">
+    <div class="offcanvas-header border-bottom">
+        <a class="navbar-brand d-flex align-items-center gap-1" href="{{ url_for('course.browse_courses') }}">
+            <div class="brand-icon bg-opacity-10 d-flex align-items-center justify-content-center rounded-3">
+                <span class="material-icons text-primary-custom fs-2">school</span>
+            </div>
+            <h5 class="brand-title mb-0">LJCourses</h5>
+        </a>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <nav class="d-flex flex-column gap-2">
+            <a class="nav-link-item {% if active_page == 'my_courses' %}active{% endif %}"
+                href="{{ url_for('student.my_courses') }}">
+                <span class="material-icons fill-1">dashboard</span>
+                <span>My Courses</span>
+            </a>
+            <a class="nav-link-item {% if active_page == 'browse_courses' %}active{% endif %}"
+                href="{{ url_for('course.browse_courses') }}">
+                <span class="material-icons">search</span>
+                <span>Browse Courses</span>
+            </a>
+            <a class="nav-link-item {% if active_page == 'completed_courses' %}active{% endif %}"
+                href="{{ url_for('student.completed_courses') }}">
+                <span class="material-icons">check_circle</span>
+                <span>Completed</span>
+            </a>
+            <a class="nav-link-item {% if active_page == 'settings' %}active{% endif %}"
+                href="{{ url_for('student.settings') }}">
+                <span class="material-icons">settings</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="border-top pt-3 mt-auto">
+            <a class="nav-link-item nav-link-danger" href="#" data-action="logout">
+                <span class="material-icons">logout</span>
+                <span>Log Out</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Area -->
+<main class="flex-fill d-flex flex-column min-w-0 position-relative bg-light">
+    <!-- Top Header -->
+    <header class="sticky-top border-bottom bg-white bg-opacity-90">
+        <div class="container-fluid px-4">
+            <div class="row align-items-center py-3">
+                <!-- Mobile Menu & Logo -->
+                <div class="col-auto d-lg-none">
+                    <button class="btn btn-link text-secondary p-0" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+                        <span class="material-icons">menu</span>
+                    </button>
+                </div>
+                <div class="col d-lg-none">
+                    <a class="navbar-brand d-flex align-items-center gap-1"
+                        href="{{ url_for('course.browse_courses') }}">
+                        <div class="bg-opacity-10 d-flex align-items-center justify-content-center rounded-2"
+                            style="width: 2rem; height: 2rem;">
+                            <span class="material-icons text-primary-custom fs-2">school</span>
+                        </div>
+                        <span class="fw-bold fs-5">LJCourses</span>
+                    </a>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="col-auto d-none d-lg-block me-auto">
+                    <form action="{{ url_for('course.browse_courses') }}" method="GET" class="position-relative"
+                        style="width: 25rem;">
+                        <span
+                            class="material-icons position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary">search</span>
+                        <input type="search" name="q" id="desktopSearch" class="form-control ps-5"
+                            placeholder="Search courses, topics, or instructors..." autocomplete="off"
+                            style="height: 2.5rem;" />
+                    </form>
+                </div>
+
+                <!-- Right Side Actions -->
+                <div class="col-auto">
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-link p-2 text-secondary" onclick="toggleDarkMode()"
+                            aria-label="Toggle Theme">
+                            <span class="material-icons icon-dark-mode">dark_mode</span>
+                            <span class="material-icons icon-light-mode">nightlight</span>
+                        </button>
+
+                        <div class="vr d-none d-sm-block" style="height: 2rem;"></div>
+
+                        <!-- User Profile -->
+                        <a href="{{ url_for('student.profile') }}"
+                            class="d-flex align-items-center gap-3 text-decoration-none">
+                            <div class="text-end d-none d-sm-block">
+                                <p id="header-user-name" class="mb-0 fw-bold small text-secondary">
+                                    {{ (user or current_user).full_name if (user or current_user) else 'Guest' }}
+                                </p>
+                                <p id="header-user-role" class="mb-0 text-secondary" style="font-size: 0.75rem;">
+                                    {{ (user or current_user).role|title if (user or current_user) else 'Visitor' }}
+                                </p>
+                            </div>
+                            <img id="header-user-photo"
+                                src="{{ (user or current_user).profile_image if (user or current_user) and (user or current_user).profile_image else '/static/images/default-user.svg' }}"
+                                class="rounded-circle bg-image border border-2 border-white shadow-sm profile-image"
+                                style='width: 2.5rem; height: 2.5rem; object-fit: cover;' alt="Profile">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="row d-lg-none pb-3">
+                <div class="col">
+                    <form action="{{ url_for('course.browse_courses') }}" method="GET" class="position-relative">
+                        <span
+                            class="material-icons position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary">search</span>
+                        <input type="search" name="q" id="mobileSearch" class="form-control ps-5"
+                            placeholder="Search courses..." autocomplete="off" style="height: 2.5rem;" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scrollable Content -->
+    <div class="flex-fill overflow-auto p-4 p-md-5">
+        {% block student_content %}{% endblock %}
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/header.js') }}"></script>
+{% block scripts %}{% endblock %}
+{% endblock %}

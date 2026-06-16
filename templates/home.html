@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}LJCourses - Bridge Your Learning Journey{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="position-relative overflow-hidden pt-5 pb-5 pt-lg-5 pb-lg-5 mb-5">
+    <div class="container-xl position-relative">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 z-1">
+                <h1 class="display-4 fw-bold mb-4 text-body-emphasis lh-1">
+                    Bridge Your <br />
+                    Learning Journey <br />
+                    with <span class="text-primary-custom">LJCourses</span>
+                </h1>
+                <p class="lead text-secondary mb-4 col-lg-10">
+                    The all-in-one platform connecting students with expert instructors and streamlined course
+                    management for a
+                    better educational future.
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+                    <a href="{{ url_for('auth.student_login') }}"
+                        class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2 px-4 py-3 shadow">
+                        <span class="material-icons">person</span>
+                        I'm a Student
+                    </a>
+                    <a href="#"
+                        class="btn btn-outline-secondary-custom btn-lg d-flex align-items-center justify-content-center gap-2 px-4 py-3 shadow-sm">
+                        <span class="material-icons">admin_panel_settings</span>
+                        I'm an Administrator
+                    </a>
+                </div>
+                <div
+                    class="d-inline-flex align-items-center gap-2 p-3 rounded border bg-body text-secondary small shadow-sm">
+                    <span class="material-icons text-primary-custom fs-6">info</span>
+                    <span>Use your official ID: <span
+                            class="font-monospace text-primary-custom">enrollmentnumber@mail.ljku.edu.in</span></span>
+                </div>
+            </div>
+            <div class="col-lg-6 position-relative d-flex justify-content-center">
+                <!-- Blobs -->
+                <div class="blob-shape blob-blue animate-blob" style="top: -2rem; right: -2rem;"></div>
+                <div class="blob-shape blob-purple animate-blob animation-delay-2000"
+                    style="bottom: -2rem; left: -2rem;">
+                </div>
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMcqtTFkkMhIdCVqHAkHcdPvoLWfWtEZCBfqMM3QtwTTgZ6JdvBzw5kJRPY3fok1V0vsM6HsjzFNY1vGzqOWW3dKHPR2XObjfMRY5oCMYsvCy438omep5kbFM0j2jfqrMlVMCrPPsEm1_rUrAh6OE1SSfxWpaea0TaN_9jjQ8GItKDFPmwnMrx6SIRGtWCiSnBzH6tN7IPxv7mquRUiW5E1fESPerX0_uFaH91PT1xX5Bb6d0Wwqzw_4HEs955Z61qezwtUok_hGB7"
+                    alt="Students collaborating"
+                    class="img-fluid rounded-4 shadow-lg position-relative z-1 w-100 object-fit-cover" loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Features Section -->
+<section class="py-5 bg-section-alt">
+    <div class="container-xl">
+        <div class="mb-5">
+            <h2 class="fw-bold mb-3">Why Choose LJCourses?</h2>
+            <p class="text-secondary lead col-lg-8">
+                Experience a seamless educational environment designed for efficiency, transparency, and academic
+                growth.
+            </p>
+        </div>
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 p-4 rounded-4">
+                    <div class="card-body p-0">
+                        <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-4 mb-4"
+                            style="background-color: rgba(0,115,230,0.1); width: 3.5rem; height: 3.5rem;">
+                            <span class="material-icons text-primary-custom fs-3">app_registration</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">Seamless Enrollment</h3>
+                        <p class="text-secondary mb-0">
+                            Register for classes in seconds with our intuitive dashboard designed to minimize
+                            friction.
+                            Automatically syncs with your <span
+                                class="badge bg-secondary-subtle text-secondary font-monospace fw-normal">@mail.ljku.edu.in</span>
+                            account.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 p-4 rounded-4">
+                    <div class="card-body p-0">
+                        <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-4 mb-4"
+                            style="background-color: rgba(0,115,230,0.1); width: 3.5rem; height: 3.5rem;">
+                            <span class="material-icons text-primary-custom fs-3">analytics</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">Real-time Analytics</h3>
+                        <p class="text-secondary mb-0">
+                            Track your grades, attendance, and performance instantly to stay on top of your progress
+                            with detailed
+                            visual reports.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 p-4 rounded-4">
+                    <div class="card-body p-0">
+                        <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-4 mb-4"
+                            style="background-color: rgba(0,115,230,0.1); width: 3.5rem; height: 3.5rem;">
+                            <span class="material-icons text-primary-custom fs-3">library_books</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">Interactive Resources</h3>
+                        <p class="text-secondary mb-0">
+                            Access assignments, readings, and high-definition video lectures anywhere, anytime.
+                            Cloud-sync keeps
+                            your materials ready.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Community Section -->
+<section class="py-5">
+    <div class="container-xl">
+        <div class="mb-5">
+            <h2 class="fw-bold mb-3">What our community says</h2>
+        </div>
+        <div class="row g-4">
+            <!-- Testimonial 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div style="height: 12rem;">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0lV7tqekBg4oXdYzqMWjMAiakfj5GhwVmZrKwtTUnJniqKqJJZ8TaTx9Kh8GBKvf0Akh1YRsVDDlW3B8lLRphkj7NqKPf-fhOj8wZXOOtf8kkYIhP9F-Bq5_og9S6aN_gj71ZKoGVG8h-otjcEW-AK53unZbaWCLfb1y77reKLOt77h7Bv8MvmtOQ_clpBXtA_2vA1Y8L7Gh_hmS5VI2P1eisI-3icvwZYwgbf-g_I7PeR6_VV4Uvr92CmQHAvVPX3Tbp4YZmIROl"
+                            alt="Sarah, a satisfied student" class="w-100 h-100 object-fit-cover" loading="lazy">
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-3">
+                            <h4 class="h6 fw-bold mb-1">Sarah, Student</h4>
+                            <div class="text-warning-custom d-flex">
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                            </div>
+                        </div>
+                        <p class="text-secondary fst-italic small mb-0">
+                            "This platform changed how I study. The resources are always just a click away and I
+                            never miss a
+                            deadline thanks to the alerts."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div style="height: 12rem;">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOT7ruXGa4mPXkM7RZv1eHNF0L9Lh1M5j5wHYllhqgeHVT5qlyA5g8daYxFxj1SGfc-TLf61YNf2Q-xcPDVDhtW5xSPWoX5BZjA84lzBYwp5BnwpMcLHaRtkO-TP-5HUZGNLqj-5EJBOtDwHNCn_dgyODzVxkpQ76jgRoKsPVxuQ6iEqp6sxvCmbUaMmztn9t2KRT_rZKjOMDryfrEd86Ic49CNiwxqOU0FIwQXz5Axpl9r-EH8laGE1eH2iUqgou1MQanXQqdA0vF"
+                            alt="Mark, a satisfied administrator" class="w-100 h-100 object-fit-cover" loading="lazy">
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-3">
+                            <h4 class="h6 fw-bold mb-1">Mark, Administrator</h4>
+                            <div class="text-warning-custom d-flex">
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star_half</span>
+                            </div>
+                        </div>
+                        <p class="text-secondary fst-italic small mb-0">
+                            "Managing courses has never been easier. The analytics dashboard is a lifesaver when
+                            tracking department
+                            performance."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-custom h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div style="height: 12rem; background-color: #ffedd5;"
+                        class="d-flex align-items-center justify-content-center">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMAj5xtJfz3qQiHgofskAYHj_-LFtkWcls05FJg0_aASjoMT2Itt52JpG66mVkyyNLXptI2A5huotHKQeOnQhVfCTPqxndi5YAYBFFJWs4By5k4fkKaLZiHqoy4ZqMXHQkCftsXNLCA3noKRqhwzZcQqSTGJiEzES249tPEbDHvpclo8PadxAQz3mROY6aC80TJVPY7232eu8LBgQOP_5boM9bcG5vtIgg7KQAnuFNlRTQ57PbqhSPPjPM_L2DX_dBUWo8T-9HL66N"
+                            alt="Jenny, a satisfied student" class="w-100 h-100 object-fit-cover opacity-75"
+                            loading="lazy">
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-3">
+                            <h4 class="h6 fw-bold mb-1">Jenny, Student</h4>
+                            <div class="text-warning-custom d-flex">
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                                <span class="material-icons fs-6">star</span>
+                            </div>
+                        </div>
+                        <p class="text-secondary fst-italic small mb-0">
+                            "I love the interactive resources. It feels like a real classroom environment even when
+                            I'm studying
+                            from my dorm room."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- CTA Section -->
+<section class="py-5 position-relative overflow-hidden" style="background-color: var(--primary-color);">
+    <div class="position-absolute top-0 start-0 w-100 h-100"
+        style="background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.3;">
+    </div>
+    <div class="container-xl position-relative text-center z-1 text-white">
+        <h2 class="display-5 fw-bold mb-4">Ready to get started?</h2>
+        <p class="lead mb-5 opacity-75 col-lg-8 mx-auto">
+            Join thousands of learners and educators today and transform your educational experience with LJCourses.
+        </p>
+        <a href="{{ url_for('auth.student_sign_up') }}"
+            class="btn btn-light text-primary-custom fw-bold px-4 py-3 rounded-3 shadow hover-scale">
+            Join Now <span class="material-icons align-middle ms-1">arrow_forward</span>
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

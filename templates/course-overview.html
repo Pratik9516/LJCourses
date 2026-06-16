@@ -1,0 +1,295 @@
+{% extends "student.html" %}
+
+{% block title %}{{ course.title if course else 'Course Overview' }} - LJCourses{% endblock %}
+
+{% set active_page = 'browse_courses' %}
+
+<!-- Course Overview CSS -->
+{% block styles %}
+<link href="{{ url_for('static', filename='css/course-overview.css' ) }}" rel="stylesheet" />{% endblock %}
+
+{% block student_content %}
+<div class="container-fluid" style="max-width: 75rem;">
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="{{ url_for('course.browse_courses') }}"
+            class="btn btn-link text-decoration-none text-secondary p-0 d-inline-flex align-items-center back-link">
+            <span class="material-icons me-2">arrow_back</span>
+            Back to Browse Courses
+        </a>
+    </div>
+
+    {% if course %}
+    <!-- Course Hero Card -->
+    <div class="card border-0 shadow-sm mb-4 overflow-hidden course-section-card">
+        <div class="row g-0 align-items-stretch">
+
+            <!-- Left Image -->
+            <div class="col-md-5 d-flex">
+                <div class="position-relative w-100">
+                    <img src="/{{ course.thumbnail }}" class="w-100 h-100"
+                        style="object-fit: contain; background-color: #1a1a2e;" alt="{{ course.title }}">
+                    <span
+                        class="position-absolute top-0 start-0 m-3 badge bg-white text-dark fw-bold text-uppercase small shadow-sm">
+                        {{ course.category.name }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="col-md-7 d-flex">
+                <div class="card-body p-4 p-md-5 d-flex flex-column w-100">
+
+                    <!-- Meta Info -->
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                        <div class="d-flex align-items-center gap-1 px-2 py-1 rounded fw-semibold"
+                            style="background-color:#fef3c7;color:#f59e0b;">
+                            <span class="material-icons" style="font-size:1.25rem;">star</span>
+                            <span>{{ course.rating or '0.0' }}</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-1 text-secondary">
+                            <span class="material-icons" style="font-size:1.25rem;">schedule</span>
+                            <span class="small">{{ format_duration(course.duration_hours) }} Total</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-1 text-secondary">
+                            <span class="material-icons" style="font-size:1.25rem;">signal_cellular_alt</span>
+                            <span class="small">{{ course.difficulty_level or 'All Levels' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="h2 fw-bold mb-3 lh-sm">
+                        {{ course.title }}
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="text-secondary mb-auto pb-4" style="line-height:1.6;">
+                        {{ course.description or course.small_description or 'No description available.' }}
+                    </p>
+
+                    <!-- Instructor & Actions -->
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-3 mt-3">
+
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="/{{ course.instructor.profile_image }}" class="rounded-circle"
+                                style="width:3rem;height:3rem;" alt="{{ course.instructor.full_name }}">
+                            <div>
+                                <p class="mb-0 fw-bold">{{ course.instructor.full_name }}</p>
+                                <p class="mb-0 text-secondary small">
+                                    {{ course.instructor.designation or 'Instructor' }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 align-items-center">
+                            {% if enrollment %}
+                            {% if enrollment.completed_at %}
+                            <button class="btn btn-primary px-4 py-2 fw-semibold" style="cursor: default;">
+                                <span class="material-icons align-middle me-1"
+                                    style="font-size: 1.25rem;">check_circle</span>
+                                Completed
+                            </button>
+                            <a href="{{ url_for('course.lesson') }}?course={{ course.slug }}"
+                                class="btn btn-outline-primary px-4 py-2 fw-semibold">
+                                Review
+                            </a>
+                            {% else %}
+                            <a href="{{ url_for('course.lesson') }}?course={{ course.slug }}"
+                                class="btn btn-success px-4 py-2 fw-semibold">
+                                <span class="material-icons align-middle me-1"
+                                    style="font-size: 1.25rem;">play_arrow</span>
+                                Continue Learning
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <button class="btn btn-primary px-4 py-2 fw-semibold" id="enrollBtn"
+                                data-course-id="{{ course.id }}">
+                                Enroll Now
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Content Grid -->
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <!-- Course Purpose -->
+            {% if course.course_purpose %}
+            <div class="card border-0 shadow-sm mb-4 course-section-card">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <span class="icon-box icon-box-blue me-2">
+                            <span class="material-icons">lightbulb</span>
+                        </span>
+                        Course Purpose
+                    </h5>
+                    <p class="text-secondary mb-0">{{ course.course_purpose }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Learning Objectives -->
+            {% if course.learning_objectives %}
+            <div class="card border-0 shadow-sm mb-4 course-section-card">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <span class="icon-box icon-box-green me-2">
+                            <span class="material-icons">flag</span>
+                        </span>
+                        Learning Objectives
+                    </h5>
+                    <div class="row g-3">
+                        {% for objective in course.learning_objectives %}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <span class="material-icons text-success me-2">check_circle</span>
+                                <span class="small">{{ objective }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Topics Covered -->
+            {% if course.topics_covered %}
+            <div class="card border-0 shadow-sm course-section-card">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <span class="icon-box icon-box-purple me-2">
+                            <span class="material-icons">category</span>
+                        </span>
+                        Topics Covered
+                    </h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for topic in course.topics_covered %}
+                        <span class="badge bg-light text-dark border">{{ topic }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Course Structure -->
+            <div class="card border-0 shadow-sm mb-4 course-section-card">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-4 pb-3 border-bottom">Course Structure</h6>
+                    <div class="d-flex flex-column gap-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box icon-box-blue flex-shrink-0 me-3">
+                                <span class="material-icons">play_lesson</span>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-semibold small">{{ lessons|length }} Lessons</p>
+                                <p class="mb-0 text-secondary" style="font-size: 0.75rem;">Video lectures</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box icon-box-teal flex-shrink-0 me-3">
+                                <span class="material-icons">card_membership</span>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-semibold small">Certificate</p>
+                                <p class="mb-0 text-secondary" style="font-size: 0.75rem;">Upon completion
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson List -->
+            {% if lessons %}
+            <div class="card border-0 shadow-sm mb-4 course-section-card">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Course Lessons</h6>
+                    <div class="d-flex flex-column gap-2">
+                        {% for lesson in lessons[:6] %}
+                        <div class="d-flex align-items-center p-2 rounded lesson-item">
+                            <span class="badge bg-secondary me-2">{{ loop.index }}</span>
+                            <span class="small flex-grow-1">{{ lesson.title }}</span>
+                            <span class="text-secondary small">{{ (lesson.video_duration // 60)|int if
+                                lesson.video_duration else '0' }}m</span>
+                        </div>
+                        {% endfor %}
+                        {% if lessons|length > 6 %}
+                        <p class="text-secondary small text-center mb-0">+ {{ lessons|length - 6 }} more lessons</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <!-- Course Not Found -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+            <span class="material-icons text-secondary mb-3" style="font-size: 4rem;">error_outline</span>
+            <h4 class="fw-bold mb-2">Course Not Found</h4>
+            <p class="text-secondary mb-3">The course you're looking for doesn't exist or has been removed.</p>
+            <a href="{{ url_for('course.browse_courses') }}" class="btn btn-primary">Browse Courses</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% block scripts %}
+<script>
+    document.getElementById('enrollBtn')?.addEventListener('click', async function () {
+        const courseId = this.dataset.courseId;
+
+        // Prevent double clicking
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Enrolling...';
+
+        try {
+            const response = await fetch('/api/enrollments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ course_id: courseId })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    location.reload();
+                }
+            } else {
+                // Re-enable on error
+                this.disabled = false;
+                this.textContent = 'Enroll Now';
+
+                if (response.status === 401) {
+                    window.location.href = "{{ url_for('auth.student_login') }}";
+                    return;
+                }
+                const data = await response.json();
+                alert(data.detail || 'Failed to enroll');
+            }
+        } catch (error) {
+            console.error('Enrollment error:', error);
+            alert('Failed to enroll. Please try again.');
+
+            // Re-enable on error
+            this.disabled = false;
+            this.textContent = 'Enroll Now';
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}
