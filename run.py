@@ -1,4 +1,10 @@
 from app import create_app
+from app.db import engine, Base
+import app.models
+
+# Automatically tables banata hai Render pe
+with engine.connect():
+    Base.metadata.create_all(bind=engine)
 
 app = create_app()
 
