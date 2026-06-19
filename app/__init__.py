@@ -16,9 +16,10 @@ def create_app(config_class=Config):
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     # Register Blueprints
-    from app.routes import auth, student, course
+    from app.routes import auth, student, course, admin
     app.register_blueprint(auth.bp)
     app.register_blueprint(student.bp)
     app.register_blueprint(course.bp)
+    app.register_blueprint(admin.bp)
 
     return app
